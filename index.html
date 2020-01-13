@@ -81,21 +81,24 @@ Your browser does not support the HTML5 canvas tag.</canvas> -->
     var imageUrl = 'outside.png',
       imageBounds = [[45.405379, -75.657868], [45.3982, -75.6429]];
 
+    var layerGroup = L.layerGroup().addTo(map);
+
     L.imageOverlay(imageUrl, imageBounds, {
       opacity: 1.0,
       interactive: true
     }).addTo(map);
 
     map.setZoom(17);
-    map.setMaxBounds(imageBounds);
+    map.setMaxBounds([[45.404379, -75.657868], [45.3982, -75.6429]]);
 
     //L.imageOverlay.opacity = 0.5;
 
 
     function onLocationFound(e) {
       var radius = e.accuracy / 2;
-      L.marker(e.latlng).addTo(map);
-      L.circle(e.latlng, radius).addTo(map);
+      layerGroup.clearLayers();
+      L.marker(e.latlng).addTo(layerGroup);
+      //L.circle(e.latlng, radius).addTo(map);
     }
 
     function onLocationError(e) {
@@ -106,8 +109,6 @@ Your browser does not support the HTML5 canvas tag.</canvas> -->
     map.on('locationerror', onLocationError);
 
     map.locate({ maxZoom: 16, watch: true });
-
-    map.setView()
 
     // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
     //   maxZoom: 18,
