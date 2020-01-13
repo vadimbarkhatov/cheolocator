@@ -11,7 +11,6 @@
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin=""></script>
 
-
   <style>
     html,
     body {
@@ -22,6 +21,7 @@
     #map {
       width: 600px;
       height: 400px;
+      background: white;
     }
   </style>
 
@@ -32,7 +32,7 @@
     }
 
     #map {
-      height: 70%;
+      height: 100%;
       width: 100vw;
     }
   </style>
@@ -52,21 +52,21 @@
 
 <body>
 
-  <p>Click the button to get your coordinates.</p>
+  <!-- <p>Click the button to get your coordinates.</p>
 
-  <button onclick="getLocation()">Try It</button>
+  <button onclick="getLocation()">Try It</button> -->
 
   <!-- <canvas id="myCanvas" width="817" height="669" style="border:1px solid #d3d3d3;">
 Your browser does not support the HTML5 canvas tag.</canvas> -->
 
-  <p id="demo"></p>
+  <!-- <p id="demo"></p> -->
 
   <div id='map'></div>
 
 
-  <div>
+  <!-- <div>
     <img id="source" src="outside.png">
-  </div>
+  </div> -->
 
   <script>
     //var mymap = L.map('mapid').setView([45.400, -75.650], 13);
@@ -148,20 +148,20 @@ Your browser does not support the HTML5 canvas tag.</canvas> -->
 
 
 
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-      } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
-      }
-    }
+    // function getLocation() {
+    //   if (navigator.geolocation) {
+    //     navigator.geolocation.getCurrentPosition(showPosition);
+    //   } else {
+    //     x.innerHTML = "Geolocation is not supported by this browser.";
+    //   }
+    // }
 
-    function showPosition(position) {
-      x.innerHTML = "Latitude: " + position.coords.latitude +
-        "<br>Longitude: " + position.coords.longitude +
-        "<br>Altitude: " + position.coords.altitude
-        ;
-    }
+    // function showPosition(position) {
+    //   x.innerHTML = "Latitude: " + position.coords.latitude +
+    //     "<br>Longitude: " + position.coords.longitude +
+    //     "<br>Altitude: " + position.coords.altitude
+    //     ;
+    // }
 
   //var c = document.getElementById("myCanvas");
   //var ctx = c.getContext("2d");
