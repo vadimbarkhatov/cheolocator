@@ -11,6 +11,9 @@
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin=""></script>
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+  <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+
   <style>
     html,
     body {
@@ -83,6 +86,9 @@ Your browser does not support the HTML5 canvas tag.</canvas> -->
 
     var layerGroup = L.layerGroup().addTo(map);
 
+    map.options.minZoom = 17;
+    map.options.maxZoom = 19;
+
     L.imageOverlay(imageUrl, imageBounds, {
       opacity: 1.0,
       interactive: true
@@ -91,14 +97,11 @@ Your browser does not support the HTML5 canvas tag.</canvas> -->
     map.setZoom(17);
     map.setMaxBounds([[45.404379, -75.657868], [45.3982, -75.6429]]);
 
-    //L.imageOverlay.opacity = 0.5;
-
-
     function onLocationFound(e) {
       var radius = e.accuracy / 2;
       layerGroup.clearLayers();
       L.marker(e.latlng).addTo(layerGroup);
-      //L.circle(e.latlng, radius).addTo(map);
+      L.circle(e.latlng, radius).addTo(layerGroup);
     }
 
     function onLocationError(e) {
@@ -110,72 +113,25 @@ Your browser does not support the HTML5 canvas tag.</canvas> -->
 
     map.locate({ maxZoom: 16, watch: true });
 
-    // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-    //   maxZoom: 18,
-    //   attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-    //     '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-    //     'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    //   id: 'mapbox/streets-v11'
-    // }).addTo(mymap);
+    var helloPopup = L.popup().setContent('Hello World!');
 
+    let campusButton = L.easyButton('<strong>Campus</strong>', function (btn, map) {
+      helloPopup.setLatLng(map.getCenter()).openOn(map);
+    }).addTo(map);
 
+    let level1Button = L.easyButton('<strong>Level 1</strong>', function (btn, map) {
+      helloPopup.setLatLng(map.getCenter()).openOn(map);
+    }).addTo(map);
 
-    // L.marker([51.5, -0.09]).addTo(mymap)
-    //   .bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+    let level2Button = L.easyButton('<strong>Level 2</strong>', function (btn, map) {
+      helloPopup.setLatLng(map.getCenter()).openOn(map);
+    }).addTo(map);
 
-    // L.circle([51.508, -0.11], 500, {
-    //   color: 'red',
-    //   fillColor: '#f03',
-    //   fillOpacity: 0.5
-    // }).addTo(mymap).bindPopup("I am a circle.");
-
-    // L.polygon([
-    //   [51.509, -0.08],
-    //   [51.503, -0.06],
-    //   [51.51, -0.047]
-    // ]).addTo(mymap).bindPopup("I am a polygon.");
-
-
-    // var popup = L.popup();
-
-    // function onMapClick(e) {
-    //   popup
-    //     .setLatLng(e.latlng)
-    //     .setContent("You clicked the map at " + e.latlng.toString())
-    //     .openOn(mymap);
-    // }
-
-    // mymap.on('click', onMapClick);
-
-
+    campusButton.button.style.width = '70px';
+    level1Button.button.style.width = '70px';
+    level2Button.button.style.width = '70px';
 
     var x = document.getElementById("demo");
-
-
-
-    // function getLocation() {
-    //   if (navigator.geolocation) {
-    //     navigator.geolocation.getCurrentPosition(showPosition);
-    //   } else {
-    //     x.innerHTML = "Geolocation is not supported by this browser.";
-    //   }
-    // }
-
-    // function showPosition(position) {
-    //   x.innerHTML = "Latitude: " + position.coords.latitude +
-    //     "<br>Longitude: " + position.coords.longitude +
-    //     "<br>Altitude: " + position.coords.altitude
-    //     ;
-    // }
-
-  //var c = document.getElementById("myCanvas");
-  //var ctx = c.getContext("2d");
-
-  //const image = document.getElementById('source');
-
-  //image.onload = function() {
-      //ctx.drawImage(image, 0, 0);
-  //}
 
 
 
