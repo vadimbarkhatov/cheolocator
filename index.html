@@ -41,46 +41,32 @@
   </style>
 
 
-  <!-- <script language="JavaScript">
+  <script language="JavaScript">
 
     var pass_entered;
-    var password = "cool";
+    var password = "today";
 
     while (pass_entered != password) {
       pass_entered = prompt('Please enter the password:', '');
     }
 
-  </script> -->
+  </script>
 
 
 <body>
 
-  <!-- <p>Click the button to get your coordinates.</p>
-
-  <button onclick="getLocation()">Try It</button> -->
-
-  <!-- <canvas id="myCanvas" width="817" height="669" style="border:1px solid #d3d3d3;">
-Your browser does not support the HTML5 canvas tag.</canvas> -->
-
-  <!-- <p id="demo"></p> -->
-
   <div id='map'></div>
-
-
-  <!-- <div>
-    <img id="source" src="outside.png">
-  </div> -->
 
   <script>
     var mapOverlay;
 
 
-    var map = L.map('map', { attributionControl: false }).fitWorld();
+    var map = L.map('map', { attributionControl: false, maxBoundsViscosity: 1 }).fitWorld();
 
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-      maxZoom: 18,
-      id: 'mapbox/streets-v11'
-    }).addTo(map);
+    // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+    //   maxZoom: 18,
+    //   id: 'mapbox/streets-v11'
+    // }).addTo(map);
 
 
 
@@ -89,7 +75,7 @@ Your browser does not support the HTML5 canvas tag.</canvas> -->
     map.options.minZoom = 17;
     map.options.maxZoom = 19;
 
-    changeLevel(0);    
+    changeLevel(0);
 
 
     map.setZoom(17);
@@ -103,26 +89,38 @@ Your browser does not support the HTML5 canvas tag.</canvas> -->
     }
 
     function changeLevel(level) {
+      if (mapOverlay == null) {
+        
+      }
+      else {
+        mapOverlay.remove();
+      }
+
       switch (level) {
         case 0:
           var imageUrl = 'outside.png',
-          imageBounds = [[45.405239, -75.657868], [45.3982, -75.6429]];
+            imageBounds = [[45.405239, -75.657868], [45.3982, -75.6429]];
           map.locate({ maxZoom: 16, watch: true, enableHighAccuracy: true });
           break;
         case 1:
-          var imageUrl = 'level1plans.png',
-          imageBounds = [[45.405239, -75.657868], [45.3982, -75.6429]];
+          var imageUrl = 'level1.png',
+            imageBounds = [[45.404839, -75.657868], [45.3982, -75.6429]];
+            layerGroup.clearLayers();
+          map.stopLocate();
           break;
         case 2:
-          // code block
+          var imageUrl = 'level2.png',
+            imageBounds = [[45.404839, -75.657868], [45.3982, -75.6429]];
+            layerGroup.clearLayers();
+          map.stopLocate();
           break;
         default:
         // code block
       }
 
       mapOverlay = L.imageOverlay(imageUrl, imageBounds, {
-            interactive: true
-          }).addTo(map);
+        interactive: true
+      }).addTo(map);
     }
 
     function onLocationError(e) {
@@ -132,20 +130,20 @@ Your browser does not support the HTML5 canvas tag.</canvas> -->
     map.on('locationfound', onLocationFound);
     map.on('locationerror', onLocationError);
 
-    
+
 
     var helloPopup = L.popup().setContent('Hello World!');
 
     let campusButton = L.easyButton('<strong>Campus</strong>', function (btn, map) {
-      helloPopup.setLatLng(map.getCenter()).openOn(map);
+      changeLevel(0);
     }).addTo(map);
 
     let level1Button = L.easyButton('<strong>Level 1</strong>', function (btn, map) {
-      helloPopup.setLatLng(map.getCenter()).openOn(map);
+      changeLevel(1);
     }).addTo(map);
 
     let level2Button = L.easyButton('<strong>Level 2</strong>', function (btn, map) {
-      helloPopup.setLatLng(map.getCenter()).openOn(map);
+      changeLevel(2);
     }).addTo(map);
 
     campusButton.button.style.width = '70px';
