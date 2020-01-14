@@ -52,6 +52,8 @@
 
   </script>
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
 
 <body>
 
@@ -68,15 +70,12 @@
     //   id: 'mapbox/streets-v11'
     // }).addTo(map);
 
-
-
     var layerGroup = L.layerGroup().addTo(map);
 
-    map.options.minZoom = 17;
+    map.options.minZoom = 16;
     map.options.maxZoom = 19;
 
     changeLevel(0);
-
 
     map.setZoom(17);
     map.setMaxBounds([[45.404379, -75.657868], [45.3982, -75.6429]]);
@@ -86,6 +85,11 @@
       layerGroup.clearLayers();
       L.marker(e.latlng).addTo(layerGroup);
       L.circle(e.latlng, radius).addTo(layerGroup);
+    }
+
+    
+    function onLocationError(e) {
+      alert(e.message);
     }
 
     function changeLevel(level) {
@@ -123,10 +127,6 @@
       }).addTo(map);
     }
 
-    function onLocationError(e) {
-      alert(e.message);
-    }
-
     map.on('locationfound', onLocationFound);
     map.on('locationerror', onLocationError);
 
@@ -149,11 +149,7 @@
     campusButton.button.style.width = '70px';
     level1Button.button.style.width = '70px';
     level2Button.button.style.width = '70px';
-
-    var x = document.getElementById("demo");
-
-
-
+    
   </script>
 
 </body>
