@@ -72,7 +72,8 @@ Your browser does not support the HTML5 canvas tag.</canvas> -->
   </div> -->
 
   <script>
-    //var mymap = L.map('mapid').setView([45.400, -75.650], 13);
+    var mapOverlay;
+
 
     var map = L.map('map', { attributionControl: false }).fitWorld();
 
@@ -81,27 +82,47 @@ Your browser does not support the HTML5 canvas tag.</canvas> -->
       id: 'mapbox/streets-v11'
     }).addTo(map);
 
-    var imageUrl = 'outside.png',
-      imageBounds = [[45.405379, -75.657868], [45.3982, -75.6429]];
+
 
     var layerGroup = L.layerGroup().addTo(map);
 
     map.options.minZoom = 17;
     map.options.maxZoom = 19;
 
-    L.imageOverlay(imageUrl, imageBounds, {
-      opacity: 1.0,
-      interactive: true
-    }).addTo(map);
+    changeLevel(0);    
+
 
     map.setZoom(17);
-    //map.setMaxBounds([[45.404379, -75.657868], [45.3982, -75.6429]]);
+    map.setMaxBounds([[45.404379, -75.657868], [45.3982, -75.6429]]);
 
     function onLocationFound(e) {
       var radius = e.accuracy / 2;
       layerGroup.clearLayers();
       L.marker(e.latlng).addTo(layerGroup);
       L.circle(e.latlng, radius).addTo(layerGroup);
+    }
+
+    function changeLevel(level) {
+      switch (level) {
+        case 0:
+          var imageUrl = 'outside.png',
+          imageBounds = [[45.405239, -75.657868], [45.3982, -75.6429]];
+          map.locate({ maxZoom: 16, watch: true, enableHighAccuracy: true });
+          break;
+        case 1:
+          var imageUrl = 'level1plans.png',
+          imageBounds = [[45.405239, -75.657868], [45.3982, -75.6429]];
+          break;
+        case 2:
+          // code block
+          break;
+        default:
+        // code block
+      }
+
+      mapOverlay = L.imageOverlay(imageUrl, imageBounds, {
+            interactive: true
+          }).addTo(map);
     }
 
     function onLocationError(e) {
@@ -111,7 +132,7 @@ Your browser does not support the HTML5 canvas tag.</canvas> -->
     map.on('locationfound', onLocationFound);
     map.on('locationerror', onLocationError);
 
-    map.locate({ maxZoom: 16, watch: true , enableHighAccuracy: true, setView: true});
+    
 
     var helloPopup = L.popup().setContent('Hello World!');
 
